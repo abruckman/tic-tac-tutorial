@@ -60,6 +60,27 @@ class Game extends React.Component {
     const history = this.state.history
     const current = history[history.length-1]
     const winner = calculateWinner(current.squares)
+    // const moves = history.map( (step, move) => {
+    //   const desc = move ?
+    //     'Move #' + move:
+    //     'Game Start';
+    //   return (
+    //     <li>
+    //       <a href="#" onClick = {() => this.jumpTo(move)}>{desc}</a>
+    //     </li>
+    //   )
+    // }
+    const moves = history.map((step, move) => {
+      const desc = move ?
+        'Move #' + move :
+        'Game start';
+      return (
+        <li>
+          <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+        </li>
+      );
+    });
+
 
     let status;
     if (winner){
@@ -70,7 +91,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board squares={current.squares} onClick={() => this.handleClick()}/>
+          <Board squares={current.squares} onClick={(i) => this.handleClick(i)}/>
         </div>
         <div className="game-info">
           <div>{status}</div>
@@ -78,7 +99,9 @@ class Game extends React.Component {
         </div>
       </div>
     );
+
   }
+
   handleClick(i) {
     const history = this.state.history
     const current = history[history.length - 1]
@@ -87,10 +110,15 @@ class Game extends React.Component {
       return;
     }
 
-    
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    console.log("hello")
 
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    // console.log(i)
+    // console.log("hello")
+    // console.log(squares)
+    // console.log(this.state.xIsNext)
+    // history.forEach(function(array){
+    //   console.log(array)
+    // })
     this.setState({
       history: history.concat([{
         squares: squares
